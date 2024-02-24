@@ -1,8 +1,3 @@
-# Booking-Flight
-
-
-
-
 # Credential
 Admin:
 username: Admin
