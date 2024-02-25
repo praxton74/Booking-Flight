@@ -1,0 +1,34 @@
+{% extends "admin/adminbase.html" %}
+{% load my_tags %}
+{% block content %}
+<div class="container text-left">
+   <div class="row justify-content-left mt-5">
+      <div class="col-md-10">
+         {% if flights %}
+         <h1>{{ flights.count }} Available Flight{{ flights.count|pluralize }}</h1>
+         {% else %}
+         <h1>Available Flights</h1>
+         {% endif %}
+      </div>
+   </div>
+   <div class="row justify-content-left mt-5">
+   </div>
+   <div class="row justify-content-left mt-5">
+      <div class="col-md-10">
+         {% if flights %}
+         <div class="list-group">
+            {% for flight in flights %}
+            <a href="{% url 'viewflight' flight.id %}" class="list-group-item list-group-item-action"><b>{{ flight.code }} [{{ flight.origin }} to {{ flight.destination }}]</b>{{ flight.date }} {{ flight.time }}<br>Available: {{ flight.available }}</a>
+            {% endfor %}
+         </div>
+         {% else %}
+         <div class="text-center">
+            <h2>Flights are currently unavailable.</h2>
+            <br>
+            <a role="button" class="btn btn-primary" href="{% url 'createflight' %}">Add Flight</a>
+         </div>
+         {% endif %}
+      </div>
+   </div>
+</div>
+{% endblock %}

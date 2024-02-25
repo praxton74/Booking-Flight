@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container text-left">
+   <div class="row justify-content-center mt-5">
+      <div class="col-md-5">
+         <h2>Ticket Booking: {{ flight.code}}</h2>
+         <br>
+         {{ flight.origin}} to {{ flight.destination }}<br>
+         Departure: {{ flight.date}} {{ flight.time }}
+      </div>
+   </div>
+   {% if flight.available %}
+   <div class="row justify-content-center mt-5">
+      <div class="col-md-5">
+         <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+               <label for="first_name">First Name:</label>
+               <input type="text" name="first_name" class="form-control" id="first_name" required>
+            </div>
+            <div class="form-group">
+               <label for="last_name">Last Name:</label>
+               <input type="text" name="last_name" class="form-control" id="last_name" required>
+            </div>
+            <div class="form-group">
+               <label for="email">Email:</label>
+               <input type="email" name="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+               <label for="contact">Phone Number:</label>
+               <input type="text" name="contact" class="form-control" id="contact" required>
+            </div>
+            <div class="form-group">
+               <label for="aaddress">Address:</label>
+               <textarea name="address" class="form-control" id="address" ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+         </form>
+      </div>
+   </div>
+   {% else %}
+   <div class="row justify-content-center mt-5">
+      <div class="col-md-5">
+         <div class="text-center">
+            <h2>All seats have been booked.</h2>
+            <br>
+            <a role="button" class="btn btn-warning" href="{% url 'currentflights' %}">Available Flights</a>
+         </div>
+      </div>
+   </div>
+   {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<script>
+   function confirmCancel() {
+       return confirm('Please confirm your cancellation.');
+   }
+</script>
+<div class="row justify-content-left mt-5">
+   <div class="col-md-5">
+      <h2>Ticket Details: {{ ticket.flight.code }}</h2>
+      <br>
+      {{ ticket.flight.origin}} to {{ ticket.flight.destination }}<br>
+      Departure: {{ ticket.flight.date}} {{ ticket.flight.time }}<br>
+      Booked at {{ ticket.date }}
+   </div>
+</div>
+<div class="row justify-content-left mt-5">
+   <div class="col-md-5">
+      {% if error %}
+      <div class="alert alert-danger" role="alert">
+         {{ error }}
+      </div>
+      {% endif %}
+      <form method="POST">
+         {% csrf_token %}
+         <div class="form-group">
+            <label for="code">Flight Code:</label>{{ ticket.flight.code }}
+         </div>
+         <div class="form-group">
+            <label for="origin">Origin:</label>{{ ticket.flight.origin }}
+         </div>
+         <div class="form-group">
+            <label for="destination">Destination:</label>{{ ticket.flight.destination }}
+         </div>
+         <div class="form-group">
+            <label for="date">Departure Date:</label>{{ ticket.flight.date }}
+         </div>
+         <div class="form-group">
+            <label for="time">Departure Time:</label>{{ ticket.flight.time }}
+         </div>
+         <div class="form-group">
+            <label for="first_name">First Name:</label>{{ ticket.first_name }}
+         </div>
+         <div class="form-group">
+            <label for="last_name">Last Name:</label>{{ ticket.last_name }}
+         </div>
+         <div class="form-group">
+            <label for="email">Email:</label>{{ ticket.email }}
+         </div>
+         <div class="form-group">
+            <label for="contact">Phone Number:</label>{{ ticket.contact }}
+         </div>
+         <div class="form-group">
+            <label for="aaddress">Address:</label>{{ ticket.address }}
+         </div>
+         <button type="button" class="btn btn-danger" onclick="$('#cancel').click()">Cancel</button>
+      </form>
+   </div>
+</div>
+<form style='display: none;' method="POST" action="{% url 'cancelticket' ticket.id %}">
+   {% csrf_token %}
+   <button id="cancel" type="submit" onclick="return confirmCancel()">Cancel</button>
+</form>
+{% endblock %}
